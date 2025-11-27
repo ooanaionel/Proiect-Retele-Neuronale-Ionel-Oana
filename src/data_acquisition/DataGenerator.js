@@ -3,7 +3,7 @@ const path = require('path');
 
 // --- Configurații Globale ---
 const NUM_CAMIOANE = 20;
-const PERIOADA_ZILE = 7; // O saptamana
+const PERIOADA_ZILE = 7; //  7 ZILE DE SIMULARE
 const FRECVENTA_MIN = 2; // La 2 minute
 const FISIER_IESIRE = path.join(__dirname, 'telemetry_raw.csv');
 
@@ -93,8 +93,12 @@ function getDynamicFactors(hour) {
 
 // --- Funcția Principală de Generare ---
 function generateTelemetryData() {
+    console.log(`[${new Date().toISOString()}] 🚀 Începe generarea datelor...`); // **MODIFICAT: TIMESTAMP START**
+    console.log(`   Simulare pentru: ${PERIOADA_ZILE} zile, ${NUM_CAMIOANE} camioane, la fiecare ${FRECVENTA_MIN} minute.`);
+    
     let dataOutput = HEADER;
     let totalRows = 0;
+    // Setăm data de start la 2025-11-27
     let startDay = new Date('2025-11-27T00:00:00');
 
     for (let zi = 0; zi < PERIOADA_ZILE; zi++) {
@@ -102,7 +106,7 @@ function generateTelemetryData() {
 
         for (let camionId = 1; camionId <= NUM_CAMIOANE; camionId++) {
             
-            // Simulam ca fiecare camion incepe cursa la un moment diferit in prima zi
+            // Simulam ca fiecare camion incepe cursa la un moment diferit in ziua respectiva
             currentTime.setHours(getRandomInt(0, 23));
             currentTime.setMinutes(getRandomInt(0, 59));
             currentTime.setSeconds(0);
@@ -116,7 +120,7 @@ function generateTelemetryData() {
                 const dynamicFactors = getDynamicFactors(currentTime.getHours());
                 
                 const row = [
-                    currentTime.toISOString().replace('T', ' ').substring(0, 19), // timestamp format
+                    currentTime.toISOString().replace('T', ' ').substring(0, 19), // timestamp format YYYY-MM-DD HH:MM:SS
                     idCursa,
                     camionId,
                     baseCourse.startLoc,
@@ -138,16 +142,22 @@ function generateTelemetryData() {
             }
             idCursa++; // Urmatoarea cursa
         }
-        startDay.setDate(startDay.getDate() + 1); // Trecerea la ziua urmatoare (daca PERIOADA_ZILE > 1)
+        // Trecerea la ziua următoare
+        startDay.setDate(startDay.getDate() + 1); 
     }
 
     // --- Salvarea Fișierului ---
     try {
         fs.writeFileSync(FISIER_IESIRE, dataOutput);
-        console.log(` Generare finalizată. Fișierul '${FISIER_IESIRE}' a fost creat.`);
+        console.log(`✅ Generare finalizată. Fișierul '${FISIER_IESIRE}' a fost creat.`);
         console.log(`   Total observații generate: ${totalRows}`);
+        
+        // Număr total estimat ar trebui să fie în jur de 100.800
+        const obsEstimate = 24 * 60 / FRECVENTA_MIN * NUM_CAMIOANE * PERIOADA_ZILE;
+        console.log(`   Estimare observații: ~${obsEstimate} (Variază din cauza duratei variabile a curselor)`);
+        
     } catch (err) {
-        console.error("Eroare la scrierea în fișier:", err);
+        console.error("❌ Eroare la scrierea în fișier:", err);
     }
 }
 
