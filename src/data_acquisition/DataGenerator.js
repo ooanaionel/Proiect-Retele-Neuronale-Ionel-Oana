@@ -149,7 +149,7 @@ function generateTelemetryData() {
     // --- Salvarea Fișierului ---
     try {
         fs.writeFileSync(FISIER_IESIRE, dataOutput);
-        console.log(`✅ Generare finalizată. Fișierul '${FISIER_IESIRE}' a fost creat.`);
+        console.log(` Generare finalizată. Fișierul '${FISIER_IESIRE}' a fost creat.`);
         console.log(`   Total observații generate: ${totalRows}`);
         
         // Număr total estimat ar trebui să fie în jur de 100.800
@@ -157,9 +157,10 @@ function generateTelemetryData() {
         console.log(`   Estimare observații: ~${obsEstimate} (Variază din cauza duratei variabile a curselor)`);
         
     } catch (err) {
-        console.error("❌ Eroare la scrierea în fișier:", err);
+        console.error(" Eroare la scrierea în fișier:", err);
     }
 }
 
 // Rulare
 generateTelemetryData();
+
