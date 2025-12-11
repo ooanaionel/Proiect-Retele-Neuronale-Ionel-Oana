@@ -202,9 +202,9 @@ proiect-rn-[nume-prenume]/
 - [X] Declarație contribuție 40% date originale completată în README_Etapa4_Arhitectura_SIA.md
 - [X] Cod generare/achiziție date funcțional și documentat
 - [X] Dovezi contribuție originală: grafice + log + statistici în `docs/`
-- [ ] Diagrama State Machine creată și salvată în `docs/state_machine.*`
-- [ ] Legendă State Machine scrisă în README_Etapa4_Arhitectura_SIA.md (minimum 1-2 paragrafe cu justificare)
-- [ ] Repository structurat conform modelului de mai sus (verificat consistență cu Etapa 3)
+- [x] Diagrama State Machine creată și salvată în `docs/state_machine.*`
+- [x] Legendă State Machine scrisă în README_Etapa4_Arhitectura_SIA.md (minimum 1-2 paragrafe cu justificare)
+- [x] Repository structurat conform modelului de mai sus (verificat consistență cu Etapa 3)
 
 ### Modul 1: Data Logging / Acquisition
 - [X] Cod rulează fără erori 
